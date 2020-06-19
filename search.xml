@@ -16,6 +16,8 @@
             
             <tag> 数据库 </tag>
             
+            <tag> 事务 </tag>
+            
         </tags>
       
     </entry>
@@ -36,6 +38,14 @@
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> 计网 </tag>
+            
+            <tag> 传输层 </tag>
+            
+        </tags>
       
     </entry>
     
