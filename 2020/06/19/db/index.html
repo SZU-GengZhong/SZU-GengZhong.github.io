@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="tcp, Hexo">
+    <meta name="keywords" content="深入理解MySQL的事务, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>tcp | Hexo</title>
+    <title>深入理解MySQL的事务 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,12 +308,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">tcp</h1>
+                    <h1 class="description center-align post-title">深入理解MySQL的事务</h1>
                 </div>
             </div>
         </div>
@@ -428,21 +428,16 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                    <div class="article-tag">
                         
-                            <a href="/categories/%E8%AE%A1%E7%BD%91/" class="post-category">
-                                计网
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
                             </a>
                         
                     </div>
+                    
+                </div>
+                <div class="col s5 right-align">
                     
                 </div>
             </div>
@@ -451,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-05-06
+                    2020-06-19
                 </div>
                 
 
@@ -467,30 +462,83 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="TCP简介"><a href="#TCP简介" class="headerlink" title="TCP简介"></a>TCP简介</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>既然要讲三次握手，就要好好讲。那么为了讲的细一点，就从TCP开始讲起把。<br>首先我们先解决是什么的问题。<br>TCP（Transmission Control Protocol）<strong>是一种面向连接的、可靠的、基于字节流的传输层通信协议</strong>，由IETF的RFC 793定义。<br>既然它是面向连接的、可靠的。那么什么是不可靠的呢。没错，它就是UDP，它是面向报文的。这里就不详细展开。</p>
-<h2 id="TCP报文结构"><a href="#TCP报文结构" class="headerlink" title="TCP报文结构"></a>TCP报文结构</h2><p><img src="image-816fcc9a08d74868813cbe88c7315d9b.png" alt="image.png"></p>
-<p>从上到下来看、<strong>目标端口</strong>以及<strong>源端口</strong>这个很好理解，就是发送和接收的两个端口</p>
+                <blockquote>
+<p>最近准备面试，由于笔者没有上过数据库，这里看了不少大佬博客的整理，这里根据自己的理解重新整理。并作复习之用<br>参考链接：<a href="https://github.com/wolverinn/Waking-Up;cyc2018.github.io" target="_blank" rel="noopener">https://github.com/wolverinn/Waking-Up;cyc2018.github.io</a>;<br><a href="https://github.com/wolverinn/Waking-Up/blob/master/Database.md" target="_blank" rel="noopener">https://github.com/wolverinn/Waking-Up/blob/master/Database.md</a></p>
+<p>以及丁奇的MySQL实战45讲</p>
+</blockquote>
+<h2 id="首先是一个最基本的数据库的几个基本性质（即ACID"><a href="#首先是一个最基本的数据库的几个基本性质（即ACID" class="headerlink" title="首先是一个最基本的数据库的几个基本性质（即ACID)"></a>首先是一个最基本的数据库的几个基本性质（即ACID)</h2><h4 id="原子性（Atomicity）"><a href="#原子性（Atomicity）" class="headerlink" title="原子性（Atomicity）"></a>原子性（Atomicity）</h4><p>事务被视为不可分割的最小单元，事务的所有操作要么全部提交成功，要么全部失败回滚。在数据库中，一个个的最小操作被称之为crud，但一个事务通常并不是只有一个crud组成的，而是多个（所以，事务应当被理解为一系列的操作）</p>
 <blockquote>
-<p>这里先附一些参考链接<br>基础：<br><a href="https://www.jianshu.com/p/ca64764e4a26" target="_blank" rel="noopener">https://www.jianshu.com/p/ca64764e4a26</a><br><a href="https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C" target="_blank" rel="noopener">https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C</a><br><a href="https://github.com/wolverinn/Waking-Up/blob/master/" target="_blank" rel="noopener">https://github.com/wolverinn/Waking-Up/blob/master/</a><br>深入：<br><a href="https://mp.weixin.qq.com/s/S1mv8AE_pQz3uHjRGS7tWg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/S1mv8AE_pQz3uHjRGS7tWg</a><br><a href="https://www.jianshu.com/p/15754b4e9458" target="_blank" rel="noopener">https://www.jianshu.com/p/15754b4e9458</a></p>
+<h5 id="CRUD："><a href="#CRUD：" class="headerlink" title="CRUD："></a>CRUD：</h5><p>增加(Create)、读取查询(Retrieve)、更新(Update)和删除(Delete)几个单词的首字母简写</p>
 </blockquote>
-<h3 id="序号（seq）"><a href="#序号（seq）" class="headerlink" title="序号（seq）"></a>序号（seq）</h3><p>这个是标志当前数据流的开始位置在总数据流上的标号，这样说可能比较抽象，我给大家举个例子。<br>比如说我有10000个字节的数据要发送，然后他被切分成20段的TCP报文，那么第一段的就是isn（初始序列号），第二段就是isn+500，第三段就是isn+1000。<br>那么这样有什么好处呢，这样数据的接收端就可以判断有没有数据在传输的过程中丢失了，从而给出<strong>应答</strong>，也为重传提供了基础。<br>然后再说说isn，他是随机生成的，可以一定程度上避免别人重置你的链接，提升可靠性，为什么呢这里不多说，可以去翻上面的参考链接</p>
-<h3 id="确认号（ack）"><a href="#确认号（ack）" class="headerlink" title="确认号（ack）"></a>确认号（ack）</h3><p>其实这个就是应答的编号。如果接收端接收到了相应的seq，并且在此seq之前的数据全部接收到了，那么他就会发送一次ACK=1（这个是标志位），ack=seq+1的包（或者叫消息）到发送端，表示数据以及在此之前的数据都接受到了，那么下次发送端发送的就从这个ack的值开始吧，即下次的seq=ack。</p>
-<p><strong>数据偏移</strong> ：指的是数据部分距离报文段起始处的偏移量，实际上指的是首部的长度<br><strong>同步 SYN</strong>：在连接建立时用来同步序号。当 SYN=1，ACK=0 时表示这是一个连接请求报文段。若对方同意建立连接，则响应报文中 SYN=1，ACK=1。<br><strong>终止 FIN</strong>：用来释放一个连接，当 FIN=1 时，表示此报文段的发送方的数据已发送完毕，并要求释放连接。<br><strong>确认 ACK</strong> :只有他置1的时候ack才会有效，其实就是表示他算是一个应答，所以其实除了建立连接的第一个报文，其他都是会带ACK的。而与之相对的，SYN通常也只在前两次握手中出现。FIN只在挥手的时候出现。<br><strong>窗口</strong>：由于接收方的窗口可能动态调整，所以这个区域是留给接收方告诉发送方自身的窗口变化的，至于窗口是什么之后会在介绍，也可以看上面的参考链接了解。</p>
-<h1 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h1><h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>终于可以介绍握手了，上了上面的基础，我们来说握手就很简单<br><img src="http://111.230.171.202:8090/upload/2020/2/image-df0c523fbcad4fa6ac2f387b528a269b.png" alt="image.png"><br>我们分步解析<br>大家可以看到，在<strong>第一次握手</strong>中，发送方（客户端）将SYN置1，这是建立连接的姿势，然后获取一个随机的isn值，我们称之为client_isn，然后将其作为seq，再把整个报文发给服务端。<br>客户端接收到了这个值之后，他也会产生一个sever_isn，但是这个却不是完全随机产生的，该序列号是用SYN报文段的源和目的IP地址与端口号以及仅有该服务器知道的秘钥生成的散列函数值,这是为了抵御SYN泛洪攻击，暂不详谈。<br>那么根据我们已经学习到的知识，在我们服务器产生的报文中，ack=client_isn+0+1（没有实际数据），然后seq = sever_isn。然后服务端再把它发送到客户端，这就是<strong>第二次握手</strong>。<br>最后是<strong>第三次握手</strong>，这次是客户端发送给服务端，seq 就是服务端的ack，ack就是服务端的seq+1，至此连接建立。 </p>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="为什么是三次而不是两次握手呢"><a href="#为什么是三次而不是两次握手呢" class="headerlink" title="为什么是三次而不是两次握手呢"></a>为什么是三次而不是两次握手呢</h3><p>假设一种情况</p>
+<p>回滚可以用回滚日志（Undo Log）来实现，回滚日志记录着事务所执行的修改操作，在回滚时反向执行这些修改操作即可。</p>
+<h4 id="一致性（Consistency）"><a href="#一致性（Consistency）" class="headerlink" title="一致性（Consistency）"></a>一致性（Consistency）</h4><p>数据库在事务执行前后都保持一致性状态。在一致性状态下，所有事务对同一个数据的读取结果都是相同的。</p>
+<h4 id="隔离性（Isolation）"><a href="#隔离性（Isolation）" class="headerlink" title="隔离性（Isolation）"></a>隔离性（Isolation）</h4><p>一个事务所做的修改在最终提交以前，对其它事务是不可见的。</p>
+<h4 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h4><p>一旦事务提交，则其所做的修改将会永远保存到数据库中。即使系统发生崩溃，事务执行的结果也不能丢失。</p>
+<p>系统发生崩溃可以用重做日志（Redo Log）进行恢复，从而实现持久性。与回滚日志记录数据的逻辑修改不同，重做日志记录的是数据页的物理修改。</p>
+<h2 id="再之后是四个并发一致性的问题"><a href="#再之后是四个并发一致性的问题" class="headerlink" title="再之后是四个并发一致性的问题"></a>再之后是四个并发一致性的问题</h2><h5 id="丢失修改"><a href="#丢失修改" class="headerlink" title="丢失修改"></a>丢失修改</h5><p>T1 和 T2 两个事务都对一个数据进行修改，T1 先修改，T2 随后修改，T2 的修改覆盖了 T1 的修改。</p>
+<h4 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h4><p>T1读到了T2未提交的修改，然后T2又把修改给撤销了，那么T1读到的就是脏数据</p>
+<h5 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h5><p>如果T1读到的数据，被T2修改了，那么T1再次读取的话，读到的就是不一样的数据了</p>
+<h5 id="幻影读"><a href="#幻影读" class="headerlink" title="幻影读"></a>幻影读</h5><p>T1 读取某个范围的数据，T2 在这个范围内插入新的数据，T1 再次读取这个范围的数据，此时读取的结果和和第一次读取的结果不同。</p>
+<h2 id="为了解决上述问题，就有了锁"><a href="#为了解决上述问题，就有了锁" class="headerlink" title="为了解决上述问题，就有了锁"></a>为了解决上述问题，就有了锁</h2><h3 id="封锁粒度"><a href="#封锁粒度" class="headerlink" title="封锁粒度"></a>封锁粒度</h3><p>MySQL 中提供了两种封锁粒度：行级锁以及表级锁。</p>
+<p>应该尽量只锁定需要修改的那部分数据，而不是所有的资源。锁定的数据量越少，发生锁争用的可能就越小，系统的并发程度就越高。</p>
+<p>但是加锁需要消耗资源，锁的各种操作（包括获取锁、释放锁、以及检查锁状态）都会增加系统开销。因此封锁粒度越小，系统开销就越大。</p>
+<p>在选择封锁粒度时，需要在锁开销和并发程度之间做一个权衡。</p>
+<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p><strong>互斥锁（Exclusive）</strong>，简写为 X 锁，又称写锁。<br><strong>共享锁（Shared）</strong>，简写为 S 锁，又称读锁。<br>有以下两个规定：<br>一个事务对数据对象 A 加了 X 锁，就可以对 A 进行读取和更新。加锁期间其它事务不能对 A 加任何锁。<br>一个事务对数据对象 A 加了 S 锁，可以对 A 进行读取操作，但是不能进行更新操作。加锁期间其它事务能对 A 加 S 锁，但是不能加 X 锁。<br>简单来说，<strong>X锁与其他锁互斥，所以能加两个的只有S锁</strong>。</p>
+<h3 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h3><p>为了实现多粒度的封锁，就有了意向锁的存在，比如说，我们需要对整张表进行某些修改，那么我们是要遍历这张表，有没有X锁呢，这无疑是非常麻烦的事。<br>所以就有了意向锁。</p>
+<p>意向锁在原来的 X/S 锁之上引入了 IX/IS，IX/IS 都是表锁，用来表示一个事务想要在表中的某个数据行上加 X 锁或 S 锁。有以下两个规定：</p>
+<p>一个事务在获得某个数据行对象的 S 锁之前，必须先获得表的 IS 锁或者更强的锁；<br>一个事务在获得某个数据行对象的 X 锁之前，必须先获得表的 IX 锁。<br>通过引入意向锁，事务 T 想要对表 A 加 X 锁，只需要先检测是否有其它事务对表 A 加了 X/IX/S/IS 锁，如果加了就表示有其它事务正在使用这个表或者表中某一行的锁，因此事务 T 加 X 锁失败。<br><img src="https://img-blog.csdnimg.cn/20200211170411320.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5OTAzNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>这里直接借用cyc博客里面的图片</p>
+<h2 id="有了锁，就衍生出了封锁强度-称之为封锁协议"><a href="#有了锁，就衍生出了封锁强度-称之为封锁协议" class="headerlink" title="有了锁，就衍生出了封锁强度,称之为封锁协议"></a>有了锁，就衍生出了封锁强度,称之为封锁协议</h2><h3 id="一级封锁协议"><a href="#一级封锁协议" class="headerlink" title="一级封锁协议"></a>一级封锁协议</h3><p>事务 T 要修改数据 A 时必须加 X 锁，直到 T 结束才释放锁。</p>
+<p>可以解决丢失修改问题，因为不能同时有两个事务对同一个数据进行修改，那么事务的修改就不会被覆盖。</p>
+<p>显然这个可以解决丢失修改的问题</p>
+<h3 id="二级封锁协议"><a href="#二级封锁协议" class="headerlink" title="二级封锁协议"></a>二级封锁协议</h3><p>在一级的基础上，要求读取数据 A 时必须加 S 锁，读取完马上释放 S 锁。</p>
+<p>可以解决读脏数据问题，因为如果一个事务在对数据 A 进行修改，根据 1 级封锁协议，会加 X 锁，那么就不能再加 S 锁了，也就是不会读入数据。</p>
+<h4 id="三级封锁协议"><a href="#三级封锁协议" class="headerlink" title="三级封锁协议"></a>三级封锁协议</h4><p>在二级的基础上，要求读取数据 A 时必须加 S 锁，直到事务结束了才能释放 S 锁。</p>
+<p>可以解决不可重复读的问题，因为读 A 时，其它事务不能对 A 加 X 锁，从而避免了在读的期间数据发生改变。</p>
+<h2 id="为了解决四个问题，对应有四种隔离等级"><a href="#为了解决四个问题，对应有四种隔离等级" class="headerlink" title="为了解决四个问题，对应有四种隔离等级"></a>为了解决四个问题，对应有四种隔离等级</h2><h4 id="未提交读"><a href="#未提交读" class="headerlink" title="未提交读"></a>未提交读</h4><p>最低隔离级别，允许一个事务能够读到另一个事务未提交的信息，只对修改数据的并发操作做限制<strong>（对于数据而言，写之前加X锁，直到事务结束释放X锁，对应一级封锁协议）</strong>，这样解决了第一类丢失更新的问题，虽然一个事务不能修改其他事务正在修改的数据，但是可以读到其他事务还未提交的修改，如果这些修改未提交，那么就会成为脏数据，所以还未解决脏读的问题，自然，就算是已经提交的数据，多次读取结果也不一定一样，所以还未解决不可重复读和幻读的问题（存在的问题：脏读，不可重复读，幻读）</p>
+<h4 id="提交读"><a href="#提交读" class="headerlink" title="提交读"></a>提交读</h4><p>只能读取已经提交的数据，换句话说，就是一个事务读取其他事务中正在修改的数据是不被允许的<strong>（一级封锁协议+读之前加S锁，读完数据释放S锁，对应二级封锁协议）</strong>，由于读完之后就释放S锁，所以不能保证不可重复读与幻读</p>
+<h4 id="可重复读"><a href="#可重复读" class="headerlink" title="可重复读"></a>可重复读</h4><p>在读已提交下，同一事务内，允许多次相同的查询能够得到不同的结果，可以使用二级封锁协议+MVCC使得当前事务只能读取不高于其事务版本的数据，也可以使用三级封锁协议<strong>（一级封锁协议+读之前加S锁，直到事务结束释放S锁）</strong>能解决可重复读</p>
+<h4 id="可串行化"><a href="#可串行化" class="headerlink" title="可串行化"></a>可串行化</h4><p>可重复读与幻读的区别是：可重复读是更改表中行级数据，而幻读是增加表中行级数据，可串行化使得所有的事务必须串行化执行，解决了一切并发问题，但会造成大量的等待、阻塞甚至死锁，使系统性能降低<br><img src="https://img-blog.csdnimg.cn/20200211170246304.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5OTAzNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>上图是一个阶段性的总结，大家可以用作整理参考</p>
+<h2 id="多版本并发控制（Multi-Version-Concurrency-Control-MVCC）"><a href="#多版本并发控制（Multi-Version-Concurrency-Control-MVCC）" class="headerlink" title="多版本并发控制（Multi-Version Concurrency Control, MVCC）"></a>多版本并发控制（Multi-Version Concurrency Control, MVCC）</h2><h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><p>上面提到了mvcc，那么mvcc是什么呢。他是 MySQL 的 InnoDB 存储引擎实现隔离级别的一种具体方式，用于实现提交读和可重复读这两种隔离级别。而未提交读隔离级别总是读取最新的数据行，要求很低，无需使用 MVCC。可串行化隔离级别需要对所有读取的行都加锁，单纯使用 MVCC 无法实现。<br>MVCC在每行记录后面都保存有两个隐藏的列，用来存储创建版本号和删除版本号。</p>
+<ul>
+<li><p>创建版本号：创建一个数据行时的事务版本号（事务版本号：事务开始时的系统版本号；系统版本号：每开始一个新的事务，系统版本号就会自动递增）；</p>
+<ul>
+<li><p>删除版本号：删除操作时的事务版本号； </p>
+</li>
+<li><p>各种操作：</p>
+<ul>
+<li>插入操作时，记录创建版本号；</li>
+<li>删除操作时，记录删除版本号；</li>
+<li>更新操作时，先记录删除版本号，再新增一行记录创建版本号；</li>
+<li>查询操作时，要符合以下条件才能被查询出来：删除版本号未定义或大于当前事务版本号（删除操作是在当前事务启动之后做的）；创建版本号小于或等于当前事务版本号（创建操作是事务完成或者在事务启动之前完成）</li>
+<li>通过版本号减少了锁的争用，提高了系统性能；可以实现提交读和可重复读两种隔离级别，未提交读无需使用MVCC</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>所以，我们更多的是用MVCC来实现事务之间的隔离，下面我们来细究一下MVCC实现的过程。</p>
+<h3 id="回滚日志以及视图"><a href="#回滚日志以及视图" class="headerlink" title="回滚日志以及视图"></a>回滚日志以及视图</h3><h4 id="回滚日志（undo-log）"><a href="#回滚日志（undo-log）" class="headerlink" title="回滚日志（undo log）"></a>回滚日志（undo log）</h4><p>我们知道MySQL有 binlog ，如果是innodb的话还有redo log，但还有一个undo log（回滚日志）。就是专门提供在不同事务中版本切换的功能。</p>
+<p>大家可能会觉得它和redolog很相似，以下是这个两个的基本区别</p>
+<ul>
+<li><strong>redo log通常是物理日志，记录的是数据页的物理修改，而不是某一行或某几行修改成怎样怎样，它用来恢复提交后的物理数据页(恢复数据页，且只能恢复到最后一次提交的位置)。</strong></li>
+<li><strong>undo用来回滚行记录到某个版本。undo log一般是逻辑日志，根据每行记录进行记录。</strong></li>
+</ul>
+<p>详细对比可以参考这一篇文章</p>
+<p> <a href="https://www.cnblogs.com/wy123/p/8365234.html" target="_blank" rel="noopener">MySQL中的重做日志（redo log），回滚日志（undo log），以及二进制日志（binlog）的简单总结</a></p>
+<h4 id="视图（consistent-read-view）"><a href="#视图（consistent-read-view）" class="headerlink" title="视图（consistent read view）"></a>视图（consistent read view）</h4><blockquote>
+<p>MySQL的视图有两个 :</p>
+<p>一个是view ，是我们执行查询时，语句定义的虚拟表</p>
+<p>另一个则是我们这次讨论的是InnoDB在实现MVCC时用到的一致性读视图，即consistent read view</p>
+</blockquote>
+<p>这个视图没有实际的物理结构，是通过事件ID与undolog来维护的，即需要哪个哪个版本的数据就通过undolog来回滚</p>
+<h3 id="具体的实现"><a href="#具体的实现" class="headerlink" title="具体的实现"></a>具体的实现</h3><p>下面来分析一下在提交读和可重复读这个模式下MVCC如何运作的。</p>
+<h4 id="可重复读-1"><a href="#可重复读-1" class="headerlink" title="可重复读"></a>可重复读</h4><p>如果是可重复读，那么引擎会在一个事务开始时创建一个视图，即分配一个版本号（事务的ID），此时我们就只能看到当前事务以及当前事务之前的数据了,如果我当前行的数据已经被别的事务修改，那么就会通过回滚日志，找到我或我之前的版本（取决于我此次有没有进行修改），来保证可重复读。</p>
+<p>但这里要注意一点，并不是版本号越大，修改一定在后面，例如我一个事务A先启动，被分配到100的ID，后面事务B后启动，被分配到101的ID，然后事务B先进行修改，所以事务B的版本反而会在前面。当然官方可能为了尽量防止这种情况的发生有以下规定：</p>
 <blockquote>
-<p>client 发出的第一个连接请求报文段并没有丢失，而是在某个网络结点长时间的滞留了，以致延误到连接释放以后的某个时间才到达 server。本来这是一个早已失效的报文段。但 server 收到此失效的连接请求报文段后，就误认为是 client 再次发出的一个新的连接请求。于是就向 client 发出确认报文段，同意建立连接。假设不采用 “三次握手”，那么只要 server 发出确认，新的连接就建立了。由于现在 client 并没有发出建立连接的请求，因此不会理睬 server 的确认，也不会向 server 发送数据。但 server 却以为新的运输连接已经建立，并一直等待 client 发来数据。这样，server 的很多资源就白白浪费掉了。采用 “三次握手” 的办法可以防止上述现象发生。例如刚才那种情况，client 不会向 server 的确认发出确认。server 由于收不到确认，就知道 client 并没有要求建立连接。</p>
+<p>begin/start transaction 命令并不是一个事务的起点，在执行到它们之后的第一个操作InnoDB表 的语句，事务才真正启动。如果你想要马上启动一个事务，可以使用start transaction with consistent snapshot 这个命令。</p>
 </blockquote>
-<p>而如果发生了这种情况，sever端会正常的返回ack包，但是client端会检测到异常并将rst=1来重置连接。</p>
-<h3 id="当第三次ACK丢失了，怎么办"><a href="#当第三次ACK丢失了，怎么办" class="headerlink" title="当第三次ACK丢失了，怎么办"></a>当第三次ACK丢失了，怎么办</h3><p>在上面的ack与seq的关系中，我们知道，在没有接收到sever端的新的包的情况下，我们client端的seq和ack的值是不会变的。那么，第三次ack丢失，但其实对于client来说，他已经认为连接成功了，那么他将会开始发送数据包，而数据包因为seq和ack都和本来第三次的ack一样，所以也就相当于第三次握手成功了。<br>有些博文认为连接是会被重置的，关于这一点，大家可以看看这一篇</p>
-<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2MTU2NzQwMQ==&mid=2247483822&idx=1&sn=36e7c4fa0a995b3119f4c7c9520f56d0&chksm=fc778268cb000b7e3a40b030809eb1357bfbdb10a4268150961e96848d7cc5359a459ceb342a&scene=126&sessionid=0&clicktime=1578640584&ascene=3&devicetype=iOS13.1.2&version=1700092d&nettype=3G+&abtest_cookie=AQABAAgAAQCehh4AAAA%3D&lang=zh_CN&fontScale=100&exportkey=A9XwKpXoXsjogxWa3FGR89g%3D&pass_ticket=Fxckyb2nvsgXWI65rTmpxZgrPtfrvpVwbJ3CfU19%2FQadLPcAQY9ovxpq%2B9QK7jro&wx_header=1" target="_blank" rel="noopener">【面试必会】全网最具深度的三次握手、四次挥手讲解</a></p>
-<h3 id="如果已经建立了连接，但客户端出现了故障怎么办？"><a href="#如果已经建立了连接，但客户端出现了故障怎么办？" class="headerlink" title="如果已经建立了连接，但客户端出现了故障怎么办？"></a>如果已经建立了连接，但客户端出现了故障怎么办？</h3><blockquote>
-<p>服务器每收到一次客户端的请求后都会重新复位一个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接</p>
-</blockquote>
-<h1 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h1><h2 id="概览-1"><a href="#概览-1" class="headerlink" title="概览"></a>概览</h2><p><img src="http://111.230.171.202:8090/upload/2020/2/image-cb1b05696bd64259b4a818a66ae6a6a3.png" alt="image.png"><br>第一次挥手：Client将FIN置为1，发送一个序列号seq给Server；表示自己要中断连接，进入FIN_WAIT_1状态；<br>第二次挥手：Server收到FIN之后，发送一个ACK=1，acknowledge number=收到的序列号+1；进入CLOSE_WAIT状态。这个阶段主要是给服务端将剩余数据发给客户端的。<br>第三次挥手：Server将FIN置1，发送一个序列号给Client；进入LAST_ACK状态；<br>第四次挥手：Client收到服务器的FIN后，进入TIME_WAIT状态；接着将ACK置1，发送一个acknowledge number=序列号+1给服务器；服务器收到后，确认acknowledge number后，变为CLOSED状态，不再向客户端发送数据。客户端等待2*MSL（报文段最长寿命）时间后，也进入CLOSED状态。完成四次挥手。</p>
-<h2 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="为何不将第三次挥手和第二次结合？"><a href="#为何不将第三次挥手和第二次结合？" class="headerlink" title="为何不将第三次挥手和第二次结合？"></a>为何不将第三次挥手和第二次结合？</h3><p>在之前已经提到过，因为服务端有可能还有数据没有传完，所以要分开。而ACK的意义是让客户端知晓服务端已收到请求，这也是为什么挥手比握手要多出一步的原因。</p>
-<h3 id="如果第二次挥手中，客户端没有收到怎么办？"><a href="#如果第二次挥手中，客户端没有收到怎么办？" class="headerlink" title="如果第二次挥手中，客户端没有收到怎么办？"></a>如果第二次挥手中，客户端没有收到怎么办？</h3><p>由于没有收到，客户端会重新发送FIN。</p>
-<h3 id="最后的TIME-WAIT有什么意义？"><a href="#最后的TIME-WAIT有什么意义？" class="headerlink" title="最后的TIME_WAIT有什么意义？"></a>最后的TIME_WAIT有什么意义？</h3><p>确保最后客户端的ACK，服务端已经接收到了（如果没接收到，服务端会重发）。</p>
+<h4 id="提交读-1"><a href="#提交读-1" class="headerlink" title="提交读"></a>提交读</h4><p>提交读就是在可重复读的基础上，每一个语句执行前都会重新算出一个新的视图，这样自然就可以实现提交读了</p>
+<h3 id="tip"><a href="#tip" class="headerlink" title="tip"></a>tip</h3><p>有一点需要注意的是，可重复读时针对查询来说的，如果一个update语句，那么他就会找到最新的记录进行更新，不然就会出现丢失修改的情况了</p>
 
             </div>
             <hr/>
@@ -516,7 +564,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://yoursite.com/2020/05/06/tcp/">http://yoursite.com/2020/05/06/tcp/</a>
+                    <a href="http://yoursite.com/2020/06/19/db/">http://yoursite.com/2020/06/19/db/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -553,7 +601,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
+                            
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -719,9 +771,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2020/06/19/db/">
                     <div class="card-image">
@@ -740,9 +793,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -751,6 +804,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -769,29 +823,33 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/05/05/hello-world/">
+                <a href="/2020/05/06/tcp/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="tcp">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">tcp</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                            TCP简介定义既然要讲三次握手，就要好好讲。那么为了讲的细一点，就从TCP开始讲起把。首先我们先解决是什么的问题。TCP（Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议，由I
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-06
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            gengzhong
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%BD%91/" class="post-category">
+                                    计网
+                                </a>
+                            
                             
                         </span>
                     </div>
